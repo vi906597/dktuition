@@ -1,12 +1,15 @@
-import { GraduationCap, UserPlus, IndianRupee, LogOut, User } from "lucide-react";
+import { useState } from "react";
+import { GraduationCap, UserPlus, IndianRupee, LogOut, User, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import SettingsDialog from "./SettingsDialog";
 
 interface HeaderProps {
   onAddStudent: () => void;
@@ -15,6 +18,7 @@ interface HeaderProps {
 
 const Header = ({ onAddStudent, onRecordPayment }: HeaderProps) => {
   const { user, signOut } = useAuth();
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const handleLogout = async () => {
     await signOut();
@@ -68,12 +72,19 @@ const Header = ({ onAddStudent, onRecordPayment }: HeaderProps) => {
               <DropdownMenuItem className="text-muted-foreground text-sm">
                 {user?.email}
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setSettingsOpen(true)} className="cursor-pointer">
+                <Settings className="h-4 w-4 mr-2" />
+                सेटिंग्स
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout} className="text-destructive cursor-pointer">
                 <LogOut className="h-4 w-4 mr-2" />
                 लॉगआउट करें
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          
+          <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
         </div>
       </div>
     </header>
