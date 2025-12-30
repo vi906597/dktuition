@@ -9,7 +9,7 @@ interface ReceiptData {
 }
 
 export const generateReceiptHTML = (data: ReceiptData): string => {
-  const { student, payment, instituteName = "ट्यूशन सेंटर", instituteAddress = "" } = data;
+  const { student, payment, instituteName = "Dk Tuition", instituteAddress = "" } = data;
 
   const getHindiMonth = (month: string) => {
     const index = MONTHS.indexOf(month);
