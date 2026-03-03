@@ -1,6 +1,7 @@
 import { Student, Payment, HINDI_MONTHS, MONTHS } from "@/types/database";
 import { format } from "date-fns";
 
+
 interface ReceiptData {
   student: Student;
   payment: Payment;
@@ -139,9 +140,20 @@ export const generateReceiptHTML = (data: ReceiptData): string => {
       text-align: center;
       width: 45%;
     }
+    .signature-img {
+      height: 60px;
+      margin-bottom: 5px;
+    }
     .signature-line {
       border-top: 2px solid #333;
-      margin-top: 50px;
+      margin-top: 10px;
+      padding-top: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+    .signature-line-student {
+      border-top: 2px solid #333;
+      margin-top: 70px;
       padding-top: 10px;
       font-size: 14px;
       color: #666;
@@ -220,10 +232,11 @@ export const generateReceiptHTML = (data: ReceiptData): string => {
 
     <div class="signature-section">
       <div class="signature-box">
-        <div class="signature-line">छात्र/अभिभावक के हस्ताक्षर</div>
+        <div class="signature-line-student">छात्र/अभिभावक के हस्ताक्षर</div>
       </div>
       <div class="signature-box">
-        <div class="signature-line">प्राधिकृत हस्ताक्षर</div>
+        <img src="${window.location.origin}/images/teacher-signature.png" class="signature-img" alt="Teacher Signature" />
+        <div class="signature-line">Dharmendra Kumar<br/>प्राधिकृत हस्ताक्षर</div>
       </div>
     </div>
 
