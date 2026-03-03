@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Edit2, Trash2, IndianRupee, Eye, Search } from "lucide-react";
+import { Edit2, Trash2, IndianRupee, Eye, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Student, Payment } from "@/types/database";
+import { Student, Payment, MONTHS, HINDI_MONTHS } from "@/types/database";
 
 interface StudentTableProps {
   students: Student[];
@@ -36,13 +36,38 @@ const StudentTable = ({
   onViewHistory,
 }: StudentTableProps) => {
   const [searchTerm, setSearchTerm] = useState("");
+  
+  const currentDate = new Date();
+  const [selectedMonthIndex, setSelectedMonthIndex] = useState(currentDate.getMonth());
+  const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
+
+  const selectedMonth = MONTHS[selectedMonthIndex];
+  const selectedHindiMonth = HINDI_MONTHS[selectedMonthIndex];
+
+  const goToPrevMonth = () => {
+    if (selectedMonthIndex === 0) {
+      setSelectedMonthIndex(11);
+      setSelectedYear((y) => y - 1);
+    } else {
+      setSelectedMonthIndex((m) => m - 1);
+    }
+  };
+
+  const goToNextMonth = () => {
+    if (selectedMonthIndex === 11) {
+      setSelectedMonthIndex(0);
+      setSelectedYear((y) => y + 1);
+    } else {
+      setSelectedMonthIndex((m) => m + 1);
+    }
+  };
 
   const getPaymentStatus = (studentId: string) => {
     const payment = payments.find(
       (p) =>
         p.student_id === studentId &&
-        p.month_for === currentMonth &&
-        p.year_for === currentYear
+        p.month_for === selectedMonth &&
+        p.year_for === selectedYear
     );
     return payment ? "paid" : "pending";
   };
@@ -54,23 +79,21 @@ const StudentTable = ({
       student.father_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const currentDate = new Date();
-  const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
-  const hindiMonths = [
-    "जनवरी", "फरवरी", "मार्च", "अप्रैल", "मई", "जून",
-    "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"
-  ];
-
   return (
     <Card className="animate-fade-in shadow-lg border-0">
       <CardHeader className="border-b bg-card">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <CardTitle className="text-xl font-semibold">
-            छात्र सूची - {hindiMonths[currentDate.getMonth()]} {currentDate.getFullYear()}
-          </CardTitle>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={goToPrevMonth}>
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <CardTitle className="text-xl font-semibold whitespace-nowrap">
+              छात्र सूची - {selectedHindiMonth} {selectedYear}
+            </CardTitle>
+            <Button variant="ghost" size="icon" onClick={goToNextMonth}>
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
           <div className="relative w-full md:w-72">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
