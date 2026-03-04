@@ -235,8 +235,8 @@ export const generateReceiptHTML = (data: ReceiptData): string => {
         <div class="signature-line-student">छात्र/अभिभावक के हस्ताक्षर</div>
       </div>
       <div class="signature-box">
-        <img src="${window.location.origin}/images/teacher-signature.png" class="signature-img" alt="Teacher Signature" style="margin-bottom: -10px;" />
-        <div class="signature-line" style="margin-top: 0;">Dharmendra Kumar<br/>प्राधिकृत हस्ताक्षर</div>
+        <img src="${window.location.origin}/images/teacher-signature.png" class="signature-img" alt="Teacher Signature" style="margin-bottom: -15px;" />
+        <div class="signature-line-student" style="margin-top: 0;">Dharmendra Kumar<br/>प्राधिकृत हस्ताक्षर</div>
       </div>
     </div>
 
