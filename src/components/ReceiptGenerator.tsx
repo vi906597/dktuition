@@ -141,8 +141,8 @@ export const generateReceiptHTML = (data: ReceiptData): string => {
       width: 45%;
     }
     .signature-img {
-      height: 60px;
-      margin-bottom: 5px;
+      height: 80px;
+      margin-bottom: -15px;
     }
     .signature-line {
       border-top: 2px solid #333;
